@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solve the Rubik's Cube</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Body Styling */
+      body {
+        font-family: "Rubik", sans-serif;
+        text-align: center;
+        margin: 2em;
+        background: linear-gradient(120deg, #1f1f1f, #3a3a3a);
+        color: #f2f2f2;
+      }
+
+      /* Heading Styling */
+      h1 {
+        font-size: 2.5em;
+        color: #ff4500; /* Vibrant orange */
+        text-shadow: 2px 2px 5px #000;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height: 1.6;
+      }
+
+      /* Instruction Box */
+      .instructions {
+        margin-top: 20px;
+        font-size: 1.5em;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Button Container Styling */
+      .button-container {
+        margin-top: 20px;
+      }
+
+      button {
+        background: #ff4500;
+        border: none;
+        color: #fff;
+        font-size: 1.2em;
+        padding: 15px 30px;
+        border-radius: 10px;
+        margin: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px #d13400;
+        transition: all 0.2s ease-in-out;
+      }
+
+      button:hover {
+        background: #ff5722;
+        box-shadow: 0 6px #c12700;
+        transform: translateY(-2px);
+      }
+
+      button:active {
+        background: #e64100;
+        box-shadow: 0 2px #d13400;
+        transform: translateY(2px);
+      }
+
+      #restart {
+        display: none;
+      }
+
+      /* Cube Widget Styling */
+      .cube-container {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .cube-widget {
+        width: 300px;
+        height: 345px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Solve the Rubik's Cube: ELI-5 Edition</h1>
+    <p>
+      Follow these steps to solve the Rubik's Cube, numbered 1 to 6 for each
+      face.
+    </p>
+    <div class="instructions">
+      <p id="step">Click "Start" to begin!</p>
+    </div>
+    <div class="button-container">
+      <button id="prevStep">Go Back</button>
+      <button id="nextStep">Start</button>
+      <button id="restart">Restart</button>
+    </div>
+    <div class="iframe-container" id="iframeContainer" scrolling="no"></div>
+    <script>
+      const steps = [
+        {
+          text: "Hold the cube so that the side with the number 1 (e.g., white) is facing up. The numbers are: 1 (white), 2 (yellow), 3 (blue), 4 (green), 5 (red), and 6 (orange).",
+          iframeEmbeds: [],
+        },
+        {
+          text: "Step 1: Solve the cross on the top face (number 1). Align the edge pieces (center ones on the edge) of number 1 with their matching center pieces.",
+          iframeEmbeds: [
+            "https://ruwix.com/widget/3d/?alg=F%20U%27%20R%20U&colored=U%20UF%20UL%20UB%20UR%20F%20R%20B%20L%20D&hover=1&speed=700&flags=showalg&colors=U:w%20F:g%20R:r%20B:b%20L:o%20D:y&algdisplay=2p",
+            "https://ruwix.com/widget/3d/?alg=F%27%20U%27%20R%20U&colored=U%20UF%20UL%20UB%20UR%20F%20R%20B%20L%20D&hover=1&speed=700&flags=showalg&colors=U:w%20F:g%20R:r%20B:b%20L:o%20D:y&algdisplay=2p",
+            "https://ruwix.com/widget/3d/?alg=U%27%20R%20U&colored=U%20UF%20UL%20UB%20UR%20F%20R%20B%20L%20D&hover=1&speed=700&flags=showalg&colors=U:w%20F:g%20R:r%20B:b%20L:o%20D:y&algdisplay=2p",
+            "https://ruwix.com/widget/3d/?alg=U%27%20L%27%20U&colored=U%20UF%20UL%20UB%20UR%20F%20R%20B%20L%20D&hover=1&speed=700&flags=showalg&colors=U:w%20F:g%20R:r%20B:b%20L:o%20D:y&algdisplay=2p",
+            "https://ruwix.com/widget/3d/?alg=U%27%20R%27%20U&colored=U%20UF%20UL%20UB%20UR%20F%20R%20B%20L%20D&hover=3&speed=700&flags=showalg&colors=U:w%20F:g%20R:r%20B:b%20L:o%20D:y&algdisplay=2p",
+          ],
+        },
+        {
+          text: "Step 2: Fix the corners of the top layer. Twist the corners until they match the side colors.",
+          iframeEmbeds: [
+            "https://ruwix.com/widget/3d/?alg=R%27%20D%20R&colored=U%20UF%20UL%20UB%20UR%20F%20R%20B%20L%20D%20ULF%20URF%20URB%20ULB&hover=1&speed=900&flags=showalg&colors=U:w%20F:g%20R:r%20B:b%20L:o%20D:y&algdisplay=2p",
+            "https://ruwix.com/widget/3d/?alg=F%20D%20F%27&colored=U%20UF%20UL%20UB%20UR%20F%20R%20B%20L%20D%20ULF%20URF%20URB%20ULB&hover=1&speed=900&flags=showalg&colors=U:w%20F:g%20R:r%20B:b%20L:o%20D:y&algdisplay=2p",
+          ],
+        },
+        {
+          text: "Step 3: Turn the cube upside down (number 1 on the bottom). Solve the middle layer by aligning the edges of sides 2, 3, 4, and 5.",
+          iframeEmbeds: [],
+        },
+        {
+          text: "Step 4: Solve the yellow cross on the top (number 2). Align the yellow edges using simple algorithms. (Turn Top, Twist Side, Turn Back).",
+          iframeEmbeds: [],
+        },
+        {
+          text: "Step 5: Position the yellow corners. Swap corners until they match their colors.",
+          iframeEmbeds: [],
+        },
+        {
+          text: "Final Step: Align all the edges of the top layer. Rotate the top edges to match the colors of sides 3, 4, 5, and 6.",
+          iframeEmbeds: [],
+        },
+        {
+          text: "Congratulations! You've solved the Rubik's Cube! 🎉",
+          iframeEmbeds: [],
+        },
+      ];
+
+      let currentStep = -1;
+
+      const prevButton = document.getElementById("prevStep");
+      const stepElement = document.getElementById("step");
+      const nextButton = document.getElementById("nextStep");
+      const restartButton = document.getElementById("restart");
+
+      function updateStep() {
+        const iframeContainer = document.getElementById("iframeContainer");
+
+        if (currentStep === -1) {
+          stepElement.textContent = `Click "Start" to begin!`;
+          nextButton.textContent = `Start`;
+          prevButton.style.display = `none`;
+          iframeContainer.innerHTML = ""; // Clear any iframes
+        } else {
+          const stepData = steps[currentStep];
+          stepElement.textContent = stepData.text;
+          nextButton.textContent = "Next Step";
+          prevButton.style.display = "inline-block";
+          prevButton.textContent =
+            currentStep === 0 ? "Go Back" : "Previous Step";
+
+          iframeContainer.innerHTML = ""; // Clear previous iframes
+          stepData.iframeEmbeds.forEach((url) => {
+            const iframe = document.createElement("iframe");
+            iframe.src = url;
+            iframe.className = "cube-widget";
+            iframe.setAttribute("scrolling", "no"); // Disable scrolling
+            iframe.style.overflow = "hidden"; // Enforce no scroll
+            iframeContainer.appendChild(iframe);
+          });
+        }
+
+        nextButton.style.display =
+          currentStep === steps.length - 1 ? "none" : "inline-block";
+        restartButton.style.display =
+          currentStep === steps.length - 1 ? "inline-block" : "none";
+      }
+
+      prevButton.addEventListener("click", () => {
+        if (currentStep > -1) {
+          currentStep--;
+          updateStep();
+        }
+      });
+
+      nextButton.addEventListener("click", () => {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          updateStep();
+        }
+      });
+
+      restartButton.addEventListener("click", () => {
+        currentStep = -1;
+        updateStep();
+      });
+
+      updateStep();
+    </script>
+  </body>
+</html>
